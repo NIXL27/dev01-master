@@ -13,16 +13,18 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx-4.2.xsd ">
 
-<!--component-scan:用来扫描指定包下的所有注解-->
+
+    <!--component-scan:用来扫描指定包下的所有注解-->
     <context:component-scan base-package="com.fc">
-        <!--不扫描指定的注解-->
+        <!--不扫描的注解-->
         <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
 
-    <!--location用于指定位置，ignore-unresolvable防止多个配置文件找不到的问题-->
+    <!--location用于指定位置，ignore-unresolvable-->
     <context:property-placeholder
-            location="classpath:jdbc.properties"
-            ignore-unresolvable="true"/>
+        location="classpath:jdbc.properties"
+        ignore-unresolvable="true"
+    />
 
     <!--配置Druid数据源-->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
@@ -32,13 +34,12 @@
         <property name="password" value="${jdbc.password}"/>
     </bean>
 
-    <!--配置SqlSessionFactoryBean-->
+    <!--配置sqlSessionFactoryBean-->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <!--配置数据源-->
         <property name="dataSource" ref="dataSource"/>
         <!--找到mybatis的配置文件-->
         <property name="configLocation" value="classpath:mybatis-config.xml"/>
-        <!--配置映射文件的路径-->
         <property name="mapperLocations" value="classpath:com/fc/mapper/*.xml"/>
     </bean>
 
@@ -56,7 +57,7 @@
     <tx:annotation-driven/>
 
     <!--通知-->
-    <tx:advice id="txAdvice">
+    <tx:advice id="advice">
         <tx:attributes>
             <tx:method name="find*" read-only="true" isolation="DEFAULT" propagation="REQUIRED"/>
             <tx:method name="select*" read-only="true" isolation="DEFAULT" propagation="REQUIRED"/>
@@ -72,6 +73,7 @@
     <aop:config>
         <!--切点-->
         <aop:pointcut id="pointcut" expression="execution(* com.fc.service.impl.*ServiceImpl.*(..))"/>
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="pointcut"/>
+        <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/>
     </aop:config>
+
 </beans>

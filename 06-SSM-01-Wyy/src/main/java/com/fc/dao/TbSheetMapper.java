@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 public interface TbSheetMapper {
-    List<TbMusic> findSongsBySheet(@Param("sheetName") String sheetName);
+    List<TbMusic> findBySheetName(@Param("sheetName") String sheetName);
 
     long countByExample(TbSheetExample example);
 

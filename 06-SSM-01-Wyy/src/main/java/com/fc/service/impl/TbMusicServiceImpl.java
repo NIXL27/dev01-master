@@ -16,38 +16,33 @@ public class TbMusicServiceImpl implements TbMusicService {
     private TbMusicMapper musicMapper;
 
     @Override
-    public List<TbMusic> findAll() {
-        // 不带条件查询全部
-        return musicMapper.selectByExample(null);
+    public TbMusic findById(Integer id) {
+        return musicMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public TbMusic findById(Integer musicId) {
-        return musicMapper.selectByPrimaryKey(musicId);
-    }
+    public TbMusic nextSong(Integer id) {
+        int max = musicMapper.findMaxId();
 
-    @Override
-    public TbMusic nextSong(Integer musicId) {
-        int maxId = musicMapper.findMaxId();
-
-        if (musicId != maxId) {
-            musicId++;
-        } else {
-            musicId = 1;
+        if (max != id) {
+            id ++;
+        }else{
+            id = musicMapper.findMinId();
         }
 
-        return musicMapper.selectByPrimaryKey(musicId);
+        return musicMapper.selectByPrimaryKey(id);
     }
 
     @Override
-    public TbMusic prevSong(Integer musicId) {
-        if (musicId != 1) {
-            musicId--;
-        } else {
-            musicId = musicMapper.findMaxId();
+    public TbMusic prevSong(Integer id) {
+
+        if (!id.equals(musicMapper.findMinId())){
+            id --;
+        }else {
+            id = musicMapper.findMaxId();
         }
 
-        return musicMapper.selectByPrimaryKey(musicId);
+        return musicMapper.selectByPrimaryKey(id);
     }
 
     @Override
@@ -56,8 +51,14 @@ public class TbMusicServiceImpl implements TbMusicService {
 
         TbMusicExample.Criteria criteria = tbMusicExample.createCriteria();
 
-        criteria.andMusicNameLike("%" + keyword + "%");
+        criteria.andMusicAlbumNameLike("%" + keyword + "%");
 
         return musicMapper.selectByExample(tbMusicExample);
+    }
+
+    @Override
+    public List<TbMusic> findAll() {
+        // 不带条件查询全部
+        return musicMapper.selectByExample(null);
     }
 }

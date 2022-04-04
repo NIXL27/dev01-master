@@ -9,8 +9,6 @@ import java.util.List;
 
 @Repository
 public interface TbMusicMapper {
-    Integer findMaxId();
-
     long countByExample(TbMusicExample example);
 
     int deleteByExample(TbMusicExample example);
@@ -18,6 +16,12 @@ public interface TbMusicMapper {
     int deleteByPrimaryKey(Integer musicId);
 
     int insert(TbMusic record);
+
+    Integer findMaxId();
+
+    Integer findMinId();
+
+//    List<TbMusic> selectByKeyword(@Param("keyword") String keyword);
 
     int insertSelective(TbMusic record);
 

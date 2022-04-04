@@ -23,22 +23,23 @@ public class TbSheetController {
     }
 
     @RequestMapping("findSongsBySheet")
-    public List<TbMusic> findSongsBySheet(String sheetName) {
+    public List<TbMusic> findSongsBySheet (String sheetName) {
         return tbSheetService.findSongsBySheet(sheetName);
     }
 
     @RequestMapping("insertSheet")
     public Map<String, Object> insertSheet(TbSheet tbSheet) {
-        int affectedRows = tbSheetService.insertSheet(tbSheet);
+        int rows = tbSheetService.insertSheet(tbSheet);
 
         Map<String, Object> map = new HashMap<>();
 
-        if (affectedRows > 0) {
+        if (rows > 0){
             map.put("code", 200);
-        } else {
+        }else {
             map.put("code", -1);
         }
 
         return map;
+
     }
 }

@@ -5,13 +5,14 @@ import com.fc.entity.TbMusic;
 import java.util.List;
 
 public interface TbMusicService {
-    List<TbMusic> findAll();
 
-    TbMusic findById(Integer musicId);
+    TbMusic findById(Integer id);
 
-    TbMusic nextSong(Integer musicId);
+    TbMusic nextSong(Integer id);
 
-    TbMusic prevSong(Integer musicId);
+    TbMusic prevSong(Integer id);
 
     List<TbMusic> search(String keyword);
+
+    List<TbMusic> findAll();
 }

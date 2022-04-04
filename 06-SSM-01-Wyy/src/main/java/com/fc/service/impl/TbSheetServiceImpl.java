@@ -12,20 +12,21 @@ import java.util.List;
 @Service
 public class TbSheetServiceImpl implements TbSheetService {
     @Autowired
-    private TbSheetMapper sheetMapper;
+    private TbSheetMapper tbSheetMapper;
 
     @Override
     public List<TbSheet> findAll() {
-        return sheetMapper.selectByExample(null);
+        return tbSheetMapper.selectByExample(null);
     }
 
     @Override
     public List<TbMusic> findSongsBySheet(String sheetName) {
-        return sheetMapper.findSongsBySheet(sheetName);
+        return tbSheetMapper.findBySheetName(sheetName);
     }
 
     @Override
     public int insertSheet(TbSheet tbSheet) {
-        return sheetMapper.insertSelective(tbSheet);
+        return tbSheetMapper.insertSelective(tbSheet);
     }
+
 }

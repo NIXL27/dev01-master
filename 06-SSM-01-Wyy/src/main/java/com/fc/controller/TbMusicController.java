@@ -11,26 +11,31 @@ import java.util.List;
 @RestController
 @RequestMapping("music")
 public class TbMusicController {
+
     @Autowired
     private TbMusicService tbMusicService;
 
     @RequestMapping("findAll")
     public List<TbMusic> findAll() {
+
         return tbMusicService.findAll();
     }
 
     @RequestMapping("findById")
     public TbMusic findById(Integer musicId) {
+
         return tbMusicService.findById(musicId);
     }
 
     @RequestMapping("nextSong")
     public TbMusic nextSong(Integer musicId) {
+
         return tbMusicService.nextSong(musicId);
     }
 
     @RequestMapping("prevSong")
     public TbMusic prevSong(Integer musicId) {
+
         return tbMusicService.prevSong(musicId);
     }
 

@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fc.dao.TbMusicMapper">
-  <cache/>
-  <select id="findMaxId" resultType="Integer">
-    select max(music_id) from tb_music
-  </select>
   <resultMap id="BaseResultMap" type="com.fc.entity.TbMusic">
     <id column="music_id" jdbcType="INTEGER" property="musicId" />
     <result column="music_name" jdbcType="VARCHAR" property="musicName" />
@@ -14,6 +10,7 @@
     <result column="music_artist_name" jdbcType="VARCHAR" property="musicArtistName" />
     <result column="sheet_id" jdbcType="INTEGER" property="sheetId" />
   </resultMap>
+  <cache/>
   <sql id="Example_Where_Clause">
     <where>
       <foreach collection="oredCriteria" item="criteria" separator="or">
@@ -73,9 +70,22 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    music_id, music_name, music_album_name, music_album_pic_url, music_mp3_url, music_artist_name, 
+    music_id, music_name, music_album_name, music_album_pic_url, music_mp3_url, music_artist_name,
     sheet_id
   </sql>
+
+  <select id="findMaxId" resultType="Integer">
+    select max(music_id) from tb_music
+  </select>
+
+  <select id="findMinId" resultType="Integer">
+    select min(music_id) from tb_music
+  </select>
+  
+<!--  <select id="selectByKeyword" parameterType="java.lang.String" resultMap="BaseResultMap">-->
+
+<!--    select * from tb_music where music_name like #{keyword}-->
+<!--  </select>-->
   <select id="selectByExample" parameterType="com.fc.entity.TbMusicExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
