@@ -1,8 +1,8 @@
 package com.fc.service.impl;
 
-import com.fc.dao.UserMapper;
-import com.fc.entity.User;
-import com.fc.service.UserService;
+import com.fc.dao.CollectionMapper;
+import com.fc.entity.Collection;
+import com.fc.service.CollectionService;
 import com.fc.vo.DataVO;
 import com.fc.vo.ResultVO;
 import com.github.pagehelper.PageHelper;
@@ -15,30 +15,30 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class CollectionServiceImpl implements CollectionService {
 
     @Autowired
-    private UserMapper userMapper;
+    private CollectionMapper collectionMapper;
 
 
     @Override
     public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<User> users = new ArrayList<>();
-        User user;
+        List<Collection> collections = new ArrayList<>();
+        Collection collection;
         try {
             if (id != null) {
-                 user = userMapper.selectByPrimaryKey(Long.parseLong(id));
-                if (user != null) {
-                    users.add(user);
+                 collection = collectionMapper.selectByPrimaryKey(Long.parseLong(id));
+                if (collection != null) {
+                    collections.add(collection);
                 }
             }else {
                 PageHelper.startPage(pageNo, pageSize);
-                users = userMapper.selectByExample(null);
+                collections = collectionMapper.selectByExample(null);
             }
 
-            PageInfo<User> pageInfo = new PageInfo<>(users);
-            DataVO dataVO = new DataVO(pageInfo.getTotal(), users, pageInfo.getPageNum(), pageInfo.getPageSize());
+            PageInfo<Collection> pageInfo = new PageInfo<>(collections);
+            DataVO dataVO = new DataVO(pageInfo.getTotal(), collections, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 
 
@@ -50,17 +50,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVO insert(User user) {
+    public ResultVO insert(Collection collection) {
         ResultVO resultVO = null;
 
-        if (user != null) {
-            user.setCreateTime(new Date());
+        if (collection != null) {
+            collection.setCreateTime(new Date());
         }
 
-        int rows = userMapper.insertSelective(user);
+        int rows = collectionMapper.insertSelective(collection);
 
         if (rows > 0) {
-            resultVO = new ResultVO("添加成功", 200, true, user);
+            resultVO = new ResultVO("添加成功", 200, true, collection);
         }else {
             resultVO = new ResultVO("添加失败", -100, false, new DataVO());
         }
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public ResultVO delete(Long id) {
         ResultVO resultVO = null;
 
-        int rows = userMapper.deleteByPrimaryKey(id);
+        int rows = collectionMapper.deleteByPrimaryKey(id);
 
         if (rows > 0) {
             resultVO = new ResultVO("删除成功", 200, true, new DataVO());
@@ -83,15 +83,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVO update(User user) {
+    public ResultVO update(Collection collection) {
         ResultVO resultVO = null;
 
-        int rows = userMapper.updateByPrimaryKeySelective(user);
+        int rows = collectionMapper.updateByPrimaryKeySelective(collection);
 
         if (rows > 0) {
-            User updatedUser = userMapper.selectByPrimaryKey(user.getId());
+            Collection updatedCollection = collectionMapper.selectByPrimaryKey(collection.getId());
 
-            resultVO = new ResultVO("修改成功", 200, true, updatedUser);
+            resultVO = new ResultVO("修改成功", 200, true, updatedCollection);
         }else {
             resultVO = new ResultVO("修改失败", -100, false, new DataVO());
         }

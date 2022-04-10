@@ -1,8 +1,9 @@
 package com.fc.service.impl;
 
-import com.fc.dao.UserMapper;
-import com.fc.entity.User;
-import com.fc.service.UserService;
+import com.fc.dao.PoorMapper;
+import com.fc.entity.Poor;
+import com.fc.entity.PoorWithBLOBs;
+import com.fc.service.PoorService;
 import com.fc.vo.DataVO;
 import com.fc.vo.ResultVO;
 import com.github.pagehelper.PageHelper;
@@ -15,30 +16,35 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class PoorServiceImpl implements PoorService {
 
     @Autowired
-    private UserMapper userMapper;
+    private PoorMapper poorMapper;
 
 
     @Override
     public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<User> users = new ArrayList<>();
-        User user;
+        List<Poor> poors = new ArrayList<>();
+        PoorWithBLOBs poor;
         try {
             if (id != null) {
-                 user = userMapper.selectByPrimaryKey(Long.parseLong(id));
-                if (user != null) {
-                    users.add(user);
+                poor = poorMapper.selectByPrimaryKey(Long.parseLong(id));
+                if (poor != null) {
+                    poors.add(poor);
+
+                    poor.setLastClickTime(new Date());
+                    poor.setClickNum(poor.getClickNum() + 1);
+
+                    poorMapper.updateByPrimaryKeySelective(poor);
                 }
             }else {
                 PageHelper.startPage(pageNo, pageSize);
-                users = userMapper.selectByExample(null);
+                poors = poorMapper.selectByExample(null);
             }
 
-            PageInfo<User> pageInfo = new PageInfo<>(users);
-            DataVO dataVO = new DataVO(pageInfo.getTotal(), users, pageInfo.getPageNum(), pageInfo.getPageSize());
+            PageInfo<Poor> pageInfo = new PageInfo<>(poors);
+            DataVO dataVO = new DataVO(pageInfo.getTotal(), poors, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 
 
@@ -50,17 +56,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVO insert(User user) {
+    public ResultVO insert(PoorWithBLOBs poor) {
         ResultVO resultVO = null;
 
-        if (user != null) {
-            user.setCreateTime(new Date());
+        if (poor != null) {
+            poor.setCreateTime(new Date());
         }
 
-        int rows = userMapper.insertSelective(user);
+        int rows = poorMapper.insertSelective(poor);
 
         if (rows > 0) {
-            resultVO = new ResultVO("添加成功", 200, true, user);
+            resultVO = new ResultVO("添加成功", 200, true, poor);
         }else {
             resultVO = new ResultVO("添加失败", -100, false, new DataVO());
         }
@@ -71,7 +77,7 @@ public class UserServiceImpl implements UserService {
     public ResultVO delete(Long id) {
         ResultVO resultVO = null;
 
-        int rows = userMapper.deleteByPrimaryKey(id);
+        int rows = poorMapper.deleteByPrimaryKey(id);
 
         if (rows > 0) {
             resultVO = new ResultVO("删除成功", 200, true, new DataVO());
@@ -83,15 +89,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVO update(User user) {
+    public ResultVO update(PoorWithBLOBs poor) {
         ResultVO resultVO = null;
 
-        int rows = userMapper.updateByPrimaryKeySelective(user);
+        int rows = poorMapper.updateByPrimaryKeySelective(poor);
 
         if (rows > 0) {
-            User updatedUser = userMapper.selectByPrimaryKey(user.getId());
+            PoorWithBLOBs updatedPoor = poorMapper.selectByPrimaryKey(poor.getId());
 
-            resultVO = new ResultVO("修改成功", 200, true, updatedUser);
+            resultVO = new ResultVO("修改成功", 200, true, updatedPoor);
         }else {
             resultVO = new ResultVO("修改失败", -100, false, new DataVO());
         }

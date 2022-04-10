@@ -150,7 +150,7 @@
       #{picture,jdbcType=VARCHAR}, #{releaseDate,jdbcType=DATE}, #{lastClickTime,jdbcType=TIMESTAMP}, 
       #{clickNum,jdbcType=INTEGER}, #{workRequire,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fc.entity.VolunteerRecruitment">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.fc.entity.VolunteerRecruitment">
     insert into volunteer_recruitment
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

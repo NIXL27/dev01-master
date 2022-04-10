@@ -72,7 +72,7 @@
     <!--切面-->
     <aop:config>
         <!--切点-->
-        <aop:pointcut id="pointcut" expression="execution(* com.fc.service.impl.*ServiceImpl.*(..))"/>
+        <aop:pointcut id="pointcut" expression="execution(* com.fc.service.impl.VolunteerRecruitmentServiceImpl.*(..))"/>
         <aop:advisor advice-ref="advice" pointcut-ref="pointcut"/>
     </aop:config>
 

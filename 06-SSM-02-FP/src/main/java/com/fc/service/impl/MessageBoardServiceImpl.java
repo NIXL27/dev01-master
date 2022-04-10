@@ -1,8 +1,9 @@
 package com.fc.service.impl;
 
-import com.fc.dao.UserMapper;
-import com.fc.entity.User;
-import com.fc.service.UserService;
+import com.fc.dao.MessageBoardMapper;
+import com.fc.entity.MessageBoard;
+import com.fc.entity.MessageBoardWithBLOBs;
+import com.fc.service.MessageBoardService;
 import com.fc.vo.DataVO;
 import com.fc.vo.ResultVO;
 import com.github.pagehelper.PageHelper;
@@ -15,30 +16,29 @@ import java.util.Date;
 import java.util.List;
 
 @Service
-public class UserServiceImpl implements UserService {
+public class MessageBoardServiceImpl implements MessageBoardService {
 
     @Autowired
-    private UserMapper userMapper;
-
+    private MessageBoardMapper messageBoardMapper;
 
     @Override
     public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<User> users = new ArrayList<>();
-        User user;
+        List<MessageBoard> messageBoards = new ArrayList<>();
+        MessageBoard messageBoard;
         try {
             if (id != null) {
-                 user = userMapper.selectByPrimaryKey(Long.parseLong(id));
-                if (user != null) {
-                    users.add(user);
+                messageBoard = messageBoardMapper.selectByPrimaryKey(Long.parseLong(id));
+                if (messageBoard != null) {
+                    messageBoards.add(messageBoard);
                 }
             }else {
                 PageHelper.startPage(pageNo, pageSize);
-                users = userMapper.selectByExample(null);
+                messageBoards = messageBoardMapper.selectByExample(null);
             }
 
-            PageInfo<User> pageInfo = new PageInfo<>(users);
-            DataVO dataVO = new DataVO(pageInfo.getTotal(), users, pageInfo.getPageNum(), pageInfo.getPageSize());
+            PageInfo<MessageBoard> pageInfo = new PageInfo<>(messageBoards);
+            DataVO dataVO = new DataVO(pageInfo.getTotal(), messageBoards, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 
 
@@ -50,17 +50,17 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ResultVO insert(User user) {
+    public ResultVO insert(MessageBoardWithBLOBs messageBoard) {
         ResultVO resultVO = null;
 
-        if (user != null) {
-            user.setCreateTime(new Date());
+        if (messageBoard != null) {
+            messageBoard.setCreateTime(new Date());
         }
 
-        int rows = userMapper.insertSelective(user);
+        int rows = messageBoardMapper.insertSelective(messageBoard);
 
         if (rows > 0) {
-            resultVO = new ResultVO("添加成功", 200, true, user);
+            resultVO = new ResultVO("添加成功", 200, true, messageBoard);
         }else {
             resultVO = new ResultVO("添加失败", -100, false, new DataVO());
         }
@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     public ResultVO delete(Long id) {
         ResultVO resultVO = null;
 
-        int rows = userMapper.deleteByPrimaryKey(id);
+        int rows = messageBoardMapper.deleteByPrimaryKey(id);
 
         if (rows > 0) {
             resultVO = new ResultVO("删除成功", 200, true, new DataVO());
@@ -82,19 +82,4 @@ public class UserServiceImpl implements UserService {
         return resultVO;
     }
 
-    @Override
-    public ResultVO update(User user) {
-        ResultVO resultVO = null;
-
-        int rows = userMapper.updateByPrimaryKeySelective(user);
-
-        if (rows > 0) {
-            User updatedUser = userMapper.selectByPrimaryKey(user.getId());
-
-            resultVO = new ResultVO("修改成功", 200, true, updatedUser);
-        }else {
-            resultVO = new ResultVO("修改失败", -100, false, new DataVO());
-        }
-        return resultVO;
-    }
 }

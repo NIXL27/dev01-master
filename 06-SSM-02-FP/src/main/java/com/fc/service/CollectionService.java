@@ -1,17 +1,16 @@
 package com.fc.service;
 
+import com.fc.entity.Collection;
 import com.fc.entity.User;
 import com.fc.vo.ResultVO;
 
-import java.util.List;
-
-public interface UserService {
+public interface CollectionService {
 
     ResultVO getList(Integer pageNo, Integer pageSize, String id);
 
-    ResultVO insert(User user);
+    ResultVO insert(Collection collection);
 
     ResultVO delete(Long id);
 
-    ResultVO update(User user);
+    ResultVO update(Collection collection);
 }

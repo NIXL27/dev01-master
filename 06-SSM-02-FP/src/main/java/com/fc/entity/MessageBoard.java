@@ -1,8 +1,9 @@
 package com.fc.entity;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class MessageBoard {
+public class MessageBoard implements Serializable {
     private Long id;
 
     private Date createTime;

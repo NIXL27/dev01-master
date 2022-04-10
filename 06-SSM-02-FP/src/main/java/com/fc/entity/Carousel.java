@@ -1,6 +1,8 @@
 package com.fc.entity;
 
-public class Carousel {
+import java.io.Serializable;
+
+public class Carousel implements Serializable {
     private Integer id;
 
     private String name;

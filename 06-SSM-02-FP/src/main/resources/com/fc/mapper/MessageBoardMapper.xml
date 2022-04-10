@@ -133,7 +133,7 @@
       #{username,jdbcType=VARCHAR}, #{picture,jdbcType=VARCHAR}, #{replyPicture,jdbcType=VARCHAR}, 
       #{content,jdbcType=LONGVARCHAR}, #{reply,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.fc.entity.MessageBoardWithBLOBs">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.fc.entity.MessageBoardWithBLOBs">
     insert into message_board
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
