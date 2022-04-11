@@ -1,7 +1,5 @@
 package com.fc.service;
 
-import com.fc.entity.Collection;
-import com.fc.entity.MessageBoard;
 import com.fc.entity.MessageBoardWithBLOBs;
 import com.fc.vo.ResultVO;
 

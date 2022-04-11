@@ -84,8 +84,11 @@
     last_click_time, click_num
   </sql>
   <sql id="Blob_Column_List">
-    condition, introduce, reply
+    'condition', 'introduce', reply
   </sql>
+<update id="updateLastClickTimeAndClickNum">
+  update poor set last_click_time = #{date}, click_num = click_num+1 where id = #{id}
+</update>
   <select id="selectByExampleWithBLOBs" parameterType="com.fc.entity.PoorExample" resultMap="ResultMapWithBLOBs">
     select
     <if test="distinct">
@@ -148,7 +151,7 @@
       #{clickNum,jdbcType=INTEGER}, #{condition,jdbcType=LONGVARCHAR}, #{introduce,jdbcType=LONGVARCHAR}, 
       #{reply,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="id" parameterType="com.fc.entity.PoorWithBLOBs">
+  <insert id="insertSelective" parameterType="com.fc.entity.PoorWithBLOBs">
     insert into poor
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">

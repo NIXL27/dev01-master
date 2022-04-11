@@ -1,7 +1,6 @@
 package com.fc.service;
 
 import com.fc.entity.Collection;
-import com.fc.entity.User;
 import com.fc.vo.ResultVO;
 
 public interface CollectionService {

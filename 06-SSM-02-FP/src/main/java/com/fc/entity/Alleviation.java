@@ -1,21 +1,26 @@
 package com.fc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 
 public class Alleviation implements Serializable {
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String title;
 
     private String type;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Integer releaseTime;
 
     private String cover;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastClickTime;
 
     private Integer clickNum;

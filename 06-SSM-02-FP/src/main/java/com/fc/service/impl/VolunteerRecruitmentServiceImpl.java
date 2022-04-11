@@ -1,10 +1,7 @@
 package com.fc.service.impl;
 
-import com.fc.dao.CollectionMapper;
 import com.fc.dao.VolunteerRecruitmentMapper;
-import com.fc.entity.Collection;
 import com.fc.entity.VolunteerRecruitment;
-import com.fc.service.CollectionService;
 import com.fc.service.VolunteerRecruitmentService;
 import com.fc.vo.DataVO;
 import com.fc.vo.ResultVO;
@@ -34,6 +31,12 @@ public class VolunteerRecruitmentServiceImpl implements VolunteerRecruitmentServ
                 volunteerRecruitment = volunteerRecruitmentMapper.selectByPrimaryKey(Long.parseLong(id));
                 if (volunteerRecruitment != null) {
                     volunteerRecruitments.add(volunteerRecruitment);
+
+                    // 更改最后一次点击时间和点击次数
+                    volunteerRecruitment.setLastClickTime(new Date());
+                    volunteerRecruitment.setClickNum(volunteerRecruitment.getClickNum() + 1);
+
+                    volunteerRecruitmentMapper.updateByPrimaryKeySelective(volunteerRecruitment);
                 }
             }else {
                 PageHelper.startPage(pageNo, pageSize);
@@ -58,6 +61,8 @@ public class VolunteerRecruitmentServiceImpl implements VolunteerRecruitmentServ
 
         if (volunteerRecruitment != null) {
             volunteerRecruitment.setCreateTime(new Date());
+            volunteerRecruitment.setClickNum(0);
+            volunteerRecruitment.setLastClickTime(null);
         }
 
         int rows = volunteerRecruitmentMapper.insertSelective(volunteerRecruitment);

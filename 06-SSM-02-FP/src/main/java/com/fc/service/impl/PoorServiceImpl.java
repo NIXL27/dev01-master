@@ -26,17 +26,14 @@ public class PoorServiceImpl implements PoorService {
     public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
         ResultVO resultVO = null;
         List<Poor> poors = new ArrayList<>();
-        PoorWithBLOBs poor;
+        Poor poor;
         try {
             if (id != null) {
                 poor = poorMapper.selectByPrimaryKey(Long.parseLong(id));
                 if (poor != null) {
                     poors.add(poor);
 
-                    poor.setLastClickTime(new Date());
-                    poor.setClickNum(poor.getClickNum() + 1);
-
-                    poorMapper.updateByPrimaryKeySelective(poor);
+                    poorMapper.updateLastClickTimeAndClickNum(new Date(), poor.getId());
                 }
             }else {
                 PageHelper.startPage(pageNo, pageSize);
@@ -61,6 +58,8 @@ public class PoorServiceImpl implements PoorService {
 
         if (poor != null) {
             poor.setCreateTime(new Date());
+            poor.setClickNum(0);
+            poor.setCreateTime(null);
         }
 
         int rows = poorMapper.insertSelective(poor);

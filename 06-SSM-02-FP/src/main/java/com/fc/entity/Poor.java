@@ -1,10 +1,17 @@
 package com.fc.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
+
+import java.io.Serializable;
 import java.util.Date;
 
-public class Poor {
+@Data
+public class Poor implements Serializable {
     private Long id;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
 
     private String sn;
@@ -25,6 +32,7 @@ public class Poor {
 
     private String audit;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastClickTime;
 
     private Integer clickNum;

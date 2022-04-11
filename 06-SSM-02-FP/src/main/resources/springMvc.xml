@@ -9,6 +9,8 @@
 
     <mvc:annotation-driven/>
 
+    <mvc:default-servlet-handler/>
+
     <!--用于导入其他的配置文件-->
     <import resource="classpath:applicationContext.xml"/>
 </beans>
