@@ -33,6 +33,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     @ResponseBody
     public ResultVO handleRuntimeException(RuntimeException e) {
+        e.printStackTrace();
         return new ResultVO("用户输入异常", 7000, false, e.getMessage());
     }
 }

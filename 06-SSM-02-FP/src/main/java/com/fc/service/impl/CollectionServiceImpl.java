@@ -22,7 +22,7 @@ public class CollectionServiceImpl implements CollectionService {
 
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
         List<Collection> collections = new ArrayList<>();
         Collection collection;
@@ -33,7 +33,7 @@ public class CollectionServiceImpl implements CollectionService {
                     collections.add(collection);
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
+                PageHelper.startPage(pageNum, pageSize);
                 collections = collectionMapper.selectByExample(null);
             }
 

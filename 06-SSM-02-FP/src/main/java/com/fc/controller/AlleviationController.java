@@ -1,6 +1,6 @@
 package com.fc.controller;
 
-import com.fc.entity.Alleviation;
+import com.fc.entity.AlleviationWithBLOBs;
 import com.fc.service.AlleviationService;
 import com.fc.vo.ResultVO;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -13,27 +13,23 @@ public class AlleviationController {
     @Autowired
     AlleviationService alleviationService;
 
-    @CrossOrigin
     @RequestMapping("getlist")
-    public ResultVO getList(@RequestParam(value = "pageNo", defaultValue = "1") Integer pageNo, @RequestParam(value = "pageSize", defaultValue = "3") Integer pageSize, String id) {
-        return alleviationService.getList(pageNo, pageSize, id);
+    public ResultVO getList(@RequestParam(value = "pageNum", defaultValue = "1") Integer pageNum, @RequestParam(value = "pageSize", defaultValue = "3") Integer pageSize, String id) {
+        return alleviationService.getList(pageNum, pageSize, id);
     }
 
-    @CrossOrigin
     @RequestMapping("add")
-    public ResultVO insert(@RequestBody Alleviation alleviation) {
+    public ResultVO insert(@RequestBody AlleviationWithBLOBs alleviation) {
         return alleviationService.insert(alleviation);
     }
 
-    @CrossOrigin
     @RequestMapping("delete")
     public ResultVO delete(Long id) {
         return alleviationService.delete(id);
     }
 
-    @CrossOrigin
     @RequestMapping("update")
-    public ResultVO update(@RequestBody Alleviation alleviation) {
+    public ResultVO update(@RequestBody AlleviationWithBLOBs alleviation) {
         return alleviationService.update(alleviation);
     }
 }

@@ -3,6 +3,8 @@ package com.fc.dao;
 import com.fc.entity.Alleviation;
 import com.fc.entity.AlleviationExample;
 import java.util.List;
+
+import com.fc.entity.AlleviationWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 public interface AlleviationMapper {
@@ -16,11 +18,11 @@ public interface AlleviationMapper {
 
     int insertSelective(Alleviation record);
 
-    List<Alleviation> selectByExampleWithBLOBs(AlleviationExample example);
+    List<AlleviationWithBLOBs> selectByExampleWithBLOBs(AlleviationExample example);
 
     List<Alleviation> selectByExample(AlleviationExample example);
 
-    Alleviation selectByPrimaryKey(Long id);
+    AlleviationWithBLOBs selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") Alleviation record, @Param("example") AlleviationExample example);
 

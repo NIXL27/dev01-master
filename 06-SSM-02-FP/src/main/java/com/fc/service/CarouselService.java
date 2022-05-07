@@ -5,7 +5,7 @@ import com.fc.vo.ResultVO;
 
 
 public interface CarouselService {
-    ResultVO getList(Integer pageNo, Integer pageSize, String id);
+    ResultVO getList(Integer pageNum, Integer pageSize, String id);
 
     ResultVO insert(Carousel carousel);
 

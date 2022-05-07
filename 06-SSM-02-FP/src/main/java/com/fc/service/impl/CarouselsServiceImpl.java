@@ -20,7 +20,7 @@ public class CarouselsServiceImpl implements CarouselService {
     CarouselMapper carouselMapper;
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
         List<Carousel> carousels = new ArrayList<>();
         Carousel carousel;
@@ -31,7 +31,7 @@ public class CarouselsServiceImpl implements CarouselService {
                     carousels.add(carousel);
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
+                PageHelper.startPage(pageNum, pageSize);
                 carousels = carouselMapper.selectByExample(null);
             }
 

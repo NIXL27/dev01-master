@@ -1,7 +1,6 @@
 package com.fc.service.impl;
 
 import com.fc.dao.MessageBoardMapper;
-import com.fc.entity.MessageBoard;
 import com.fc.entity.MessageBoardWithBLOBs;
 import com.fc.service.MessageBoardService;
 import com.fc.vo.DataVO;
@@ -22,10 +21,10 @@ public class MessageBoardServiceImpl implements MessageBoardService {
     private MessageBoardMapper messageBoardMapper;
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<MessageBoard> messageBoards = new ArrayList<>();
-        MessageBoard messageBoard;
+        List<MessageBoardWithBLOBs> messageBoards = new ArrayList<>();
+        MessageBoardWithBLOBs messageBoard;
         try {
             if (id != null) {
                 messageBoard = messageBoardMapper.selectByPrimaryKey(Long.parseLong(id));
@@ -33,11 +32,11 @@ public class MessageBoardServiceImpl implements MessageBoardService {
                     messageBoards.add(messageBoard);
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
-                messageBoards = messageBoardMapper.selectByExample(null);
+                PageHelper.startPage(pageNum, pageSize);
+                messageBoards = messageBoardMapper.selectByExampleWithBLOBs(null);
             }
 
-            PageInfo<MessageBoard> pageInfo = new PageInfo<>(messageBoards);
+            PageInfo<MessageBoardWithBLOBs> pageInfo = new PageInfo<>(messageBoards);
             DataVO dataVO = new DataVO(pageInfo.getTotal(), messageBoards, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 

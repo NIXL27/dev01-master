@@ -25,7 +25,6 @@ public class Alleviation implements Serializable {
 
     private Integer clickNum;
 
-    private String content;
 
     public Long getId() {
         return id;
@@ -89,13 +88,5 @@ public class Alleviation implements Serializable {
 
     public void setClickNum(Integer clickNum) {
         this.clickNum = clickNum;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content == null ? null : content.trim();
     }
 }

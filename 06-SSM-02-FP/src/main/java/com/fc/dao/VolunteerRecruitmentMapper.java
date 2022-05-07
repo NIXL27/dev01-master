@@ -3,6 +3,8 @@ package com.fc.dao;
 import com.fc.entity.VolunteerRecruitment;
 import com.fc.entity.VolunteerRecruitmentExample;
 import java.util.List;
+
+import com.fc.entity.VolunteerRecruitmentWithBLOBs;
 import org.apache.ibatis.annotations.Param;
 
 public interface VolunteerRecruitmentMapper {
@@ -16,11 +18,11 @@ public interface VolunteerRecruitmentMapper {
 
     int insertSelective(VolunteerRecruitment record);
 
-    List<VolunteerRecruitment> selectByExampleWithBLOBs(VolunteerRecruitmentExample example);
+    List<VolunteerRecruitmentWithBLOBs> selectByExampleWithBLOBs(VolunteerRecruitmentExample example);
 
     List<VolunteerRecruitment> selectByExample(VolunteerRecruitmentExample example);
 
-    VolunteerRecruitment selectByPrimaryKey(Long id);
+    VolunteerRecruitmentWithBLOBs selectByPrimaryKey(Long id);
 
     int updateByExampleSelective(@Param("record") VolunteerRecruitment record, @Param("example") VolunteerRecruitmentExample example);
 

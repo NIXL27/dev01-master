@@ -2,6 +2,7 @@ package com.fc.service.impl;
 
 import com.fc.dao.VolunteerRecruitmentMapper;
 import com.fc.entity.VolunteerRecruitment;
+import com.fc.entity.VolunteerRecruitmentWithBLOBs;
 import com.fc.service.VolunteerRecruitmentService;
 import com.fc.vo.DataVO;
 import com.fc.vo.ResultVO;
@@ -22,10 +23,10 @@ public class VolunteerRecruitmentServiceImpl implements VolunteerRecruitmentServ
 
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<VolunteerRecruitment> volunteerRecruitments = new ArrayList<>();
-        VolunteerRecruitment volunteerRecruitment;
+        List<VolunteerRecruitmentWithBLOBs> volunteerRecruitments = new ArrayList<>();
+        VolunteerRecruitmentWithBLOBs volunteerRecruitment;
         try {
             if (id != null) {
                 volunteerRecruitment = volunteerRecruitmentMapper.selectByPrimaryKey(Long.parseLong(id));
@@ -39,11 +40,11 @@ public class VolunteerRecruitmentServiceImpl implements VolunteerRecruitmentServ
                     volunteerRecruitmentMapper.updateByPrimaryKeySelective(volunteerRecruitment);
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
-                volunteerRecruitments = volunteerRecruitmentMapper.selectByExample(null);
+                PageHelper.startPage(pageNum, pageSize);
+                volunteerRecruitments = volunteerRecruitmentMapper.selectByExampleWithBLOBs(null);
             }
 
-            PageInfo<VolunteerRecruitment> pageInfo = new PageInfo<>(volunteerRecruitments);
+            PageInfo<VolunteerRecruitmentWithBLOBs> pageInfo = new PageInfo<>(volunteerRecruitments);
             DataVO dataVO = new DataVO(pageInfo.getTotal(), volunteerRecruitments, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 
@@ -56,7 +57,7 @@ public class VolunteerRecruitmentServiceImpl implements VolunteerRecruitmentServ
     }
 
     @Override
-    public ResultVO insert(VolunteerRecruitment volunteerRecruitment) {
+    public ResultVO insert(VolunteerRecruitmentWithBLOBs volunteerRecruitment) {
         ResultVO resultVO = null;
 
         if (volunteerRecruitment != null) {
@@ -92,7 +93,7 @@ public class VolunteerRecruitmentServiceImpl implements VolunteerRecruitmentServ
     }
 
     @Override
-    public ResultVO update(VolunteerRecruitment volunteerRecruitment) {
+    public ResultVO update(VolunteerRecruitmentWithBLOBs volunteerRecruitment) {
         ResultVO resultVO = null;
 
         int rows = volunteerRecruitmentMapper.updateByPrimaryKeySelective(volunteerRecruitment);

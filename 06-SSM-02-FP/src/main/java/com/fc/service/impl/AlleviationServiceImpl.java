@@ -2,6 +2,7 @@ package com.fc.service.impl;
 
 import com.fc.dao.AlleviationMapper;
 import com.fc.entity.Alleviation;
+import com.fc.entity.AlleviationWithBLOBs;
 import com.fc.service.AlleviationService;
 import com.fc.vo.DataVO;
 import com.fc.vo.ResultVO;
@@ -21,10 +22,10 @@ public class AlleviationServiceImpl implements AlleviationService {
     AlleviationMapper alleviationMapper;
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<Alleviation> alleviations = new ArrayList<>();
-        Alleviation alleviation;
+        List<AlleviationWithBLOBs> alleviations = new ArrayList<>();
+        AlleviationWithBLOBs alleviation;
         try {
             if (id != null) {
                 alleviation = alleviationMapper.selectByPrimaryKey(Long.parseLong(id));
@@ -42,11 +43,11 @@ public class AlleviationServiceImpl implements AlleviationService {
 
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
-                alleviations = alleviationMapper.selectByExample(null);
+                PageHelper.startPage(pageNum, pageSize);
+                alleviations = alleviationMapper.selectByExampleWithBLOBs(null);
             }
 
-            PageInfo<Alleviation> pageInfo = new PageInfo<>(alleviations);
+            PageInfo<AlleviationWithBLOBs> pageInfo = new PageInfo<>(alleviations);
             DataVO dataVO = new DataVO(pageInfo.getTotal(), alleviations, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 
@@ -59,7 +60,7 @@ public class AlleviationServiceImpl implements AlleviationService {
     }
 
     @Override
-    public ResultVO insert(Alleviation alleviation) {
+    public ResultVO insert(AlleviationWithBLOBs alleviation) {
         ResultVO resultVO = null;
 
         Date date = new Date();
@@ -102,7 +103,7 @@ public class AlleviationServiceImpl implements AlleviationService {
     }
 
     @Override
-    public ResultVO update(Alleviation alleviation) {
+    public ResultVO update(AlleviationWithBLOBs alleviation) {
         ResultVO resultVO = null;
 
         int rows = alleviationMapper.updateByPrimaryKeySelective(alleviation);

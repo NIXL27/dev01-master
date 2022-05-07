@@ -22,7 +22,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
         List<User> users = new ArrayList<>();
         User user;
@@ -33,7 +33,7 @@ public class UserServiceImpl implements UserService {
                     users.add(user);
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
+                PageHelper.startPage(pageNum, pageSize);
                 users = userMapper.selectByExample(null);
             }
 

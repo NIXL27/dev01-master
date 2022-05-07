@@ -1,7 +1,6 @@
 package com.fc.service.impl;
 
 import com.fc.dao.PoorMapper;
-import com.fc.entity.Poor;
 import com.fc.entity.PoorWithBLOBs;
 import com.fc.service.PoorService;
 import com.fc.vo.DataVO;
@@ -23,10 +22,10 @@ public class PoorServiceImpl implements PoorService {
 
 
     @Override
-    public ResultVO getList(Integer pageNo, Integer pageSize, String id) {
+    public ResultVO getList(Integer pageNum, Integer pageSize, String id) {
         ResultVO resultVO = null;
-        List<Poor> poors = new ArrayList<>();
-        Poor poor;
+        List<PoorWithBLOBs> poors = new ArrayList<>();
+        PoorWithBLOBs poor;
         try {
             if (id != null) {
                 poor = poorMapper.selectByPrimaryKey(Long.parseLong(id));
@@ -36,11 +35,11 @@ public class PoorServiceImpl implements PoorService {
                     poorMapper.updateLastClickTimeAndClickNum(new Date(), poor.getId());
                 }
             }else {
-                PageHelper.startPage(pageNo, pageSize);
-                poors = poorMapper.selectByExample(null);
+                PageHelper.startPage(pageNum, pageSize);
+                poors = poorMapper.selectByExampleWithBLOBs(null);
             }
 
-            PageInfo<Poor> pageInfo = new PageInfo<>(poors);
+            PageInfo<PoorWithBLOBs> pageInfo = new PageInfo<>(poors);
             DataVO dataVO = new DataVO(pageInfo.getTotal(), poors, pageInfo.getPageNum(), pageInfo.getPageSize());
             resultVO = new ResultVO("查询成功", 200, true, dataVO);
 
