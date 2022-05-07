@@ -1,0 +1,23 @@
+{
+  "properties": [
+    {
+      "name": "student.name",
+      "type": "java.lang.String",
+      "description": "Description for student.name."
+    },
+    {
+      "name": "student.name",
+      "type": "java.lang.String",
+      "description": "Description for student.name."
+    },
+    {
+      "name": "student.birthday",
+      "type": "java.lang.String",
+      "description": "Description for student.birthday."
+    },
+    {
+      "name": "student.hobby",
+      "type": "java.lang.String",
+      "description": "Description for student.hobby."
+    }
+  ] }
