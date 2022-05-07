@@ -31,11 +31,11 @@
 
     $.ajax({
       type: "post",
-      url: "/User/login",
+      url: "/user/login",
       data: data,
       success: function (resp) {
         if (!resp.success) {
-          alert("登录失败");
+          alert(resp.message);
         } else {
           // 将token存储到本地存储
           localStorage.setItem("token", resp.token);
