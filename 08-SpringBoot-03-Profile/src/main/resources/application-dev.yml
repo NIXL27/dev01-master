@@ -1,0 +1,9 @@
+# 开发环境
+server:
+  port: 8080
+  servlet:
+    context-path: /dev
+
+person:
+  name: "漩涡鸣人"
+  age: 30

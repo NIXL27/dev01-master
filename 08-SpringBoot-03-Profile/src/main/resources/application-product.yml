@@ -1,0 +1,9 @@
+# 开发环境
+server:
+  port: 8888
+  servlet:
+    context-path: /product
+
+person:
+  name: "波风水门"
+  age: -1

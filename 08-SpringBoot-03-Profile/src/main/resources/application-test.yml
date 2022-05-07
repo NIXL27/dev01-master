@@ -1,0 +1,9 @@
+# 开发环境
+server:
+  port: 8848
+  servlet:
+    context-path: /test
+
+person:
+  name: "博人"
+  age: 8
